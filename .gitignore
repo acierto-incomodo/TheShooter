@@ -1,0 +1,8 @@
+
+/node_modules
+/build
+/dist
+/theshooterlauncher_deb
+/venv
+*.spec
+*.deb

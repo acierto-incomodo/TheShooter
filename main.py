@@ -81,7 +81,7 @@ class LauncherWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("The Shooter Launcher")
-        self.setMinimumSize(520, 360)
+        self.setMinimumSize(520, 420)
         self.setWindowIcon(QtGui.QIcon.fromTheme("applications-games"))
 
         self.setup_ui()
@@ -101,7 +101,7 @@ class LauncherWindow(QtWidgets.QWidget):
         self.status.setAlignment(QtCore.Qt.AlignCenter)
         layout.addWidget(self.status)
 
-        # botones
+        # botones principales
         btn_layout = QtWidgets.QHBoxLayout()
         self.btn_check  = QtWidgets.QPushButton("Buscar actualización")
         self.btn_update = QtWidgets.QPushButton("Actualizar")
@@ -113,6 +113,18 @@ class LauncherWindow(QtWidgets.QWidget):
 
         layout.addLayout(btn_layout)
 
+        # ------------ NUEVOS BOTONES -------------
+        tools_layout = QtWidgets.QHBoxLayout()
+
+        self.btn_open_folder = QtWidgets.QPushButton("Abrir ubicación")
+        self.btn_delete_data = QtWidgets.QPushButton("Eliminar datos")
+
+        tools_layout.addWidget(self.btn_open_folder)
+        tools_layout.addWidget(self.btn_delete_data)
+
+        layout.addLayout(tools_layout)
+        # ------------------------------------------
+
         # barra de progreso
         self.progress = QtWidgets.QProgressBar()
         self.progress.setRange(0, 100)
@@ -121,7 +133,7 @@ class LauncherWindow(QtWidgets.QWidget):
 
         layout.addStretch()
 
-        # versión en el fondo
+        # versión al fondo
         self.version_display = QtWidgets.QLabel("", alignment=QtCore.Qt.AlignCenter)
         self.version_display.setStyleSheet("font-weight:bold; font-size:14px; margin-bottom:8px;")
         layout.addWidget(self.version_display)
@@ -130,6 +142,10 @@ class LauncherWindow(QtWidgets.QWidget):
         self.btn_check.clicked.connect(self.on_check)
         self.btn_update.clicked.connect(self.on_update)
         self.btn_start.clicked.connect(self.on_start)
+
+        # nuevas señales
+        self.btn_open_folder.clicked.connect(self.open_location)
+        self.btn_delete_data.clicked.connect(self.delete_data)
 
         self.btn_update.setEnabled(False)
 
@@ -145,6 +161,33 @@ class LauncherWindow(QtWidgets.QWidget):
                 self.version_display.setText("Necesitas descargar el juego")
         else:
             self.version_display.setText("Necesitas descargar el juego")
+
+    # ------------ NUEVA FUNCIÓN: ABRIR UBICACIÓN ------------
+
+    def open_location(self):
+        folder = str(Path.cwd())
+        if sys.platform.startswith("win"):
+            os.startfile(folder)
+        else:
+            subprocess.Popen(["xdg-open", folder])
+
+    # ------------ NUEVA FUNCIÓN: ELIMINAR DATOS ------------
+
+    def delete_data(self):
+        try:
+            if DOWNLOAD_DIR.exists():
+                shutil.rmtree(DOWNLOAD_DIR)
+            if GAME_DIR.exists():
+                shutil.rmtree(GAME_DIR)
+
+            DOWNLOAD_DIR.mkdir(exist_ok=True)
+            GAME_DIR.mkdir(exist_ok=True)
+
+            self.refresh_version_display()
+            self.set_status("Carpetas eliminadas.")
+
+        except Exception as e:
+            self.set_status(f"Error: {e}")
 
     # ------------ CHECK ----------
 
@@ -199,7 +242,6 @@ class LauncherWindow(QtWidgets.QWidget):
 
     def _update_thread(self):
         try:
-            # elegir URL según sistema
             if sys.platform.startswith("win"):
                 build_url = BUILD_URL_WIN
                 zip_name = "Build.zip"
@@ -260,6 +302,7 @@ class LauncherWindow(QtWidgets.QWidget):
             self.set_status("Juego iniciado.")
         except Exception as e:
             self.set_status(f"Error al iniciar: {e}")
+
 
 # --------------- MAIN ---------------------
 

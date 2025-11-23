@@ -16,12 +16,20 @@ else
     echo "BuildLinux.sh no encontrado."
 fi
 
-# Ejecutar BuildDev.sh
-if [ -f "./BuildDev.sh" ]; then
-    bash ./BuildDev.sh
-    echo "BuildDev.sh ejecutado correctamente."
+# Ejecutar BuildDeb.sh
+if [ -f "./BuildDeb.sh" ]; then
+    bash ./BuildDeb.sh
+    echo "BuildDeb.sh ejecutado correctamente."
 else
-    echo "BuildDev.sh no encontrado."
+    echo "BuildDeb.sh no encontrado."
+fi
+
+# Ejecutar CreateDeb.sh
+if [ -f "./CreateDeb.sh" ]; then
+    bash ./CreateDeb.sh
+    echo "CreateDeb.sh ejecutado correctamente."
+else
+    echo "CreateDeb.sh no encontrado."
 fi
 
 echo "Todos los scripts se han ejecutado."

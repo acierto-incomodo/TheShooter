@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Array de carpetas a eliminar
-folders=("build" "dist" "downloads" "game")
+folders=("build" "dist" "downloads" "game" "theshooterlauncher_deb")
 
 # Array de archivos a eliminar
-files=("main.spec")
+files=("main.spec" "theshooterlauncher_deb.deb")
 
 # Eliminar carpetas si existen
 for folder in "${folders[@]}"; do

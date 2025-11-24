@@ -6,3 +6,5 @@
 /venv
 *.spec
 *.deb
+/game
+/downloads

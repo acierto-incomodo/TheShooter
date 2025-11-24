@@ -82,6 +82,7 @@ class LauncherWindow(QtWidgets.QWidget):
         super().__init__()
         self.setWindowTitle("The Shooter Launcher")
         self.setMinimumSize(520, 420)
+        self.setMaximumSize(520, 420)
         self.setWindowIcon(QtGui.QIcon.fromTheme("applications-games"))
 
         self.setup_ui()

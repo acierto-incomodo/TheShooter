@@ -1,0 +1,1 @@
+python -m PyInstaller --onefile --windowed --noconsole --icon=logo.ico main.py

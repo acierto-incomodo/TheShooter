@@ -12,6 +12,8 @@ from PySide6 import QtCore, QtWidgets, QtGui
 
 # ---------------- CONFIG ------------------
 
+LAUNCHER_VERSION = "1.0.4"
+
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"
 VERSION_URL = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Version.txt"
@@ -135,9 +137,23 @@ class LauncherWindow(QtWidgets.QWidget):
         layout.addStretch()
 
         # versión al fondo
-        self.version_display = QtWidgets.QLabel("", alignment=QtCore.Qt.AlignCenter)
-        self.version_display.setStyleSheet("font-weight:bold; font-size:14px; margin-bottom:8px;")
-        layout.addWidget(self.version_display)
+        # self.version_display = QtWidgets.QLabel("", alignment=QtCore.Qt.AlignCenter)
+        # self.version_display.setStyleSheet("font-weight:bold; font-size:14px; margin-bottom:8px;")
+        # layout.addWidget(self.version_display)
+        version_layout = QtWidgets.QHBoxLayout()
+        
+        self.version_display = QtWidgets.Qlabel("", alignment=QtCore.Qt.AlingCenter)
+        self.version_display.setStyleSheet("font-weight:bold; font-size:14px;")
+        
+        self.launcher_version_label = QtWidgets.QLabel(f"Launcher v{LAUNCHER_VERSION}")
+        self.launcher_version_label.setStyleSheet("font-size:14px; color: gray; margin-left:10px;")
+        
+        version_layout.addStretch()
+        version_layout.addWidget(self.version_display)
+        version_layout.addWidget(self.launcher_version_label)
+        version_layout.addStretch()
+        
+        layout.addLayout(version_layout)
 
         # señales
         self.btn_check.clicked.connect(self.on_check)
@@ -220,12 +236,22 @@ class LauncherWindow(QtWidgets.QWidget):
     @QtCore.Slot(bool, str)
     def on_check_done(self, update_available, latest):
         self.btn_check.setEnabled(True)
-        if update_available:
-            self.set_status(f"Nueva versión disponible: {latest}")
-            self.btn_update.setEnabled(True)
+        
+        installed = self.game_installed()
+        
+        if installed:
+            if update_available:
+                self.set_status(f"Nueva versión disponible: {latest}")
+                self.btn_update.setEnabled(True)
+            else:
+                self.set_status("Tu juego está actualizado.")
+                self.btn_update.setEnabled(False)
+                
         else:
-            self.set_status("Tu juego está actualizado.")
-            self.btn_update.setEnabled(False)
+            # si NO está instalado → mostrar "Instalar"
+            self.set_status(f"El juego no esta instalado. Versión disponible: {latest}")
+            self.btn_update.setText("Instalar")
+            self.btn_update.setEnabled(True)
 
     @QtCore.Slot(str)
     def on_check_failed(self, err):
@@ -285,8 +311,11 @@ class LauncherWindow(QtWidgets.QWidget):
     @QtCore.Slot(str)
     def on_update_done(self, version):
         self.progress.setVisible(False)
-        self.set_status("Actualización completada.")
+        self.set_status("Instalación completada." if not self.game_installed() else "Actualización completada.")
+        
+        self.btn_update.setText("Actualizar")
         self.btn_update.setEnabled(False)
+        
         self.refresh_version_display()
 
     @QtCore.Slot(str)
@@ -303,6 +332,11 @@ class LauncherWindow(QtWidgets.QWidget):
             self.set_status("Juego iniciado.")
         except Exception as e:
             self.set_status(f"Error al iniciar: {e}")
+            
+    # --------- GAME INSTALLED CHECK -----------
+    
+    def game_installed(self):
+        return VERSION_FILE.exists() and BUILD_DIR.exists()
 
 
 # --------------- MAIN ---------------------

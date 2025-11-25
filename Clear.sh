@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Array de carpetas a eliminar
-folders=("build" "dist" "downloads" "game" "theshooterlauncher_deb")
+folders=("build" "dist" "downloads" "game" "theshooterlauncher_deb" "snap")
 
 # Array de archivos a eliminar
 files=("main.spec" "theshooterlauncher_deb.deb")

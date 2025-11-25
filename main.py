@@ -137,23 +137,23 @@ class LauncherWindow(QtWidgets.QWidget):
         layout.addStretch()
 
         # versión al fondo
-        # self.version_display = QtWidgets.QLabel("", alignment=QtCore.Qt.AlignCenter)
-        # self.version_display.setStyleSheet("font-weight:bold; font-size:14px; margin-bottom:8px;")
-        # layout.addWidget(self.version_display)
-        version_layout = QtWidgets.QHBoxLayout()
+        self.version_display = QtWidgets.QLabel("", alignment=QtCore.Qt.AlignCenter)
+        self.version_display.setStyleSheet("font-weight:bold; font-size:14px; margin-bottom:8px;")
+        layout.addWidget(self.version_display)
+        # version_layout = QtWidgets.QHBoxLayout()
         
-        self.version_display = QtWidgets.Qlabel("", alignment=QtCore.Qt.AlingCenter)
-        self.version_display.setStyleSheet("font-weight:bold; font-size:14px;")
+        # self.version_display = QtWidgets.Qlabel("", alignment=QtCore.Qt.AlingCenter)
+        # self.version_display.setStyleSheet("font-weight:bold; font-size:14px;")
         
-        self.launcher_version_label = QtWidgets.QLabel(f"Launcher v{LAUNCHER_VERSION}")
-        self.launcher_version_label.setStyleSheet("font-size:14px; color: gray; margin-left:10px;")
+        # self.launcher_version_label = QtWidgets.QLabel(f"Launcher v{LAUNCHER_VERSION}")
+        # self.launcher_version_label.setStyleSheet("font-size:14px; color: gray; margin-left:10px;")
         
-        version_layout.addStretch()
-        version_layout.addWidget(self.version_display)
-        version_layout.addWidget(self.launcher_version_label)
-        version_layout.addStretch()
+        # version_layout.addStretch()
+        # version_layout.addWidget(self.version_display)
+        # version_layout.addWidget(self.launcher_version_label)
+        # version_layout.addStretch()
         
-        layout.addLayout(version_layout)
+        # layout.addLayout(version_layout)
 
         # señales
         self.btn_check.clicked.connect(self.on_check)

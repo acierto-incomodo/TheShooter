@@ -2,7 +2,6 @@
 import sys
 import os
 import requests
-import subprocess
 from pathlib import Path
 from threading import Thread
 from PySide6 import QtCore, QtWidgets, QtGui
@@ -12,11 +11,11 @@ from PySide6 import QtCore, QtWidgets, QtGui
 DOWNLOAD_DIR = Path.cwd() / "WinDownloads"
 DOWNLOAD_DIR.mkdir(exist_ok=True)
 
-LAUNCHER_EXE = DOWNLOAD_DIR / "The_Shooter_Launcher_Installer.exe"
-VERSION_FILE = DOWNLOAD_DIR / "Version.txt"
+LAUNCHER_EXE = DOWNLOAD_DIR / "win_launcher.exe"
+VERSION_FILE = DOWNLOAD_DIR / "version_win_launcher.txt"
 
-URL_LAUNCHER = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/The_Shooter_Launcher_Installer.exe"
-URL_VERSION  = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Version.txt"
+URL_LAUNCHER = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/launcher_win.exe"
+URL_VERSION  = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/version_win_launcher.txt"
 
 # ---------------- Utils -------------------
 
@@ -34,8 +33,8 @@ def download(url: str, dest: Path, progress_callback=None):
                 continue
             f.write(chunk)
             downloaded += len(chunk)
-            if progress_callback:
-                progress_callback(downloaded, total)
+            if progress_callback and total:
+                progress_callback(int(downloaded * 100 / total))
 
 # ---------------- GUI ----------------------
 
@@ -44,9 +43,8 @@ class UpdaterWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Launcher Updater")
-        self.setMinimumSize(500, 200)
-        self.setMaximumSize(500, 200)
-        self.setWindowIcon(QtGui.QIcon.fromTheme("system-software-update"))
+        self.setMinimumSize(500, 125)
+        self.setMaximumSize(500, 125)
 
         self.setup_ui()
         self.start_check()
@@ -54,23 +52,19 @@ class UpdaterWindow(QtWidgets.QWidget):
     def setup_ui(self):
         layout = QtWidgets.QVBoxLayout(self)
 
-        # titulo
         title = QtWidgets.QLabel("Actualizando Launcher…")
         title.setAlignment(QtCore.Qt.AlignCenter)
         title.setStyleSheet("font-size:22px; font-weight:bold;")
         layout.addWidget(title)
 
-        # estado
         self.status = QtWidgets.QLabel("Comprobando versión…")
         self.status.setAlignment(QtCore.Qt.AlignCenter)
         layout.addWidget(self.status)
 
-        # barra de progreso
         self.progress = QtWidgets.QProgressBar()
         self.progress.setRange(0, 100)
         layout.addWidget(self.progress)
 
-        # texto de versión
         self.version_display = QtWidgets.QLabel("", alignment=QtCore.Qt.AlignCenter)
         self.version_display.setStyleSheet("font-weight:bold; font-size:14px; margin-top:8px;")
         layout.addWidget(self.version_display)
@@ -91,73 +85,77 @@ class UpdaterWindow(QtWidgets.QWidget):
             resp.raise_for_status()
             remote_version = resp.text.strip()
         except Exception as e:
-            QtCore.QMetaObject.invokeMethod(
-                self, "show_error",
-                QtCore.Qt.QueuedConnection,
-                QtCore.Q_ARG(str, f"Error obteniendo versión: {e}")
-            )
+            self.error(f"Error obteniendo versión: {e}")
             return
 
         QtCore.QMetaObject.invokeMethod(
-            self, "on_version_received",
+            self, "check_local_version",
             QtCore.Qt.QueuedConnection,
             QtCore.Q_ARG(str, remote_version)
         )
 
     @QtCore.Slot(str)
-    def on_version_received(self, version):
-        self.version_display.setText(f"Versión disponible: {version}")
+    def check_local_version(self, remote_version):
+        self.version_display.setText(f"Versión disponible: {remote_version}")
+
+        local_version = None
+        if VERSION_FILE.exists():
+            local_version = VERSION_FILE.read_text().strip()
+
+        # Si ya está la última versión → ejecutar
+        if local_version == remote_version and LAUNCHER_EXE.exists():
+            self.set_status("Launcher actualizado. Iniciando…")
+            self.progress.setValue(100)
+            QtCore.QTimer.singleShot(1000, self.run_launcher)
+            return
+
+        # Si no → descargar
         self.set_status("Descargando actualización…")
-        Thread(target=self._download_all, daemon=True).start()
+        Thread(target=self.download_update, args=(remote_version,), daemon=True).start()
 
     # ---------------- DOWNLOAD ----------------
 
-    def _download_all(self):
+    def download_update(self, remote_version):
         try:
-            # version file
-            version_tmp = VERSION_FILE
-            download(URL_VERSION, version_tmp)
+            # descargar version
+            download(URL_VERSION, VERSION_FILE)
 
-            # launcher exe
-            def progress_cb(downloaded, total):
-                percent = int(downloaded * 100 / total) if total else 0
-                QtCore.QMetaObject.invokeMethod(
-                    self.progress, "setValue",
-                    QtCore.Qt.QueuedConnection,
-                    QtCore.Q_ARG(int, percent)
-                )
-
-            download(URL_LAUNCHER, LAUNCHER_EXE, progress_cb)
+            # descargar exe
+            download(URL_LAUNCHER, LAUNCHER_EXE,
+                     lambda p: QtCore.QMetaObject.invokeMethod(
+                         self.progress, "setValue",
+                         QtCore.Qt.QueuedConnection,
+                         QtCore.Q_ARG(int, p)
+                     ))
 
             QtCore.QMetaObject.invokeMethod(
-                self, "install_done",
+                self, "download_done",
                 QtCore.Qt.QueuedConnection
             )
 
         except Exception as e:
-            QtCore.QMetaObject.invokeMethod(
-                self, "show_error",
-                QtCore.Qt.QueuedConnection,
-                QtCore.Q_ARG(str, f"Error de descarga: {e}")
-            )
-
-    # ---------------- DONE ----------------
+            self.error(f"Error de descarga: {e}")
 
     @QtCore.Slot()
-    def install_done(self):
-        self.set_status("Instalación completada. Iniciando launcher…")
+    def download_done(self):
+        self.set_status("Actualización instalada. Iniciando…")
         self.progress.setValue(100)
+        QtCore.QTimer.singleShot(1000, self.run_launcher)
 
+    # ---------------- RUN ----------------
+
+    @QtCore.Slot()
+    def run_launcher(self):
         try:
             os.startfile(str(LAUNCHER_EXE))
         except Exception as e:
-            self.show_error(f"No se pudo ejecutar el launcher: {e}")
+            self.error(f"No se pudo iniciar el launcher: {e}")
             return
+        self.close()
 
-        QtCore.QTimer.singleShot(1500, self.close)
+    # ---------------- ERROR ----------------
 
-    @QtCore.Slot(str)
-    def show_error(self, msg):
+    def error(self, msg):
         self.set_status(msg)
 
 # ---------------- MAIN ----------------------

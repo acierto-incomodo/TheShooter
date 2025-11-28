@@ -17,6 +17,7 @@ LAUNCHER_VERSION = "1.0.4"
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"
 VERSION_URL = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Version.txt"
+RELEASE_NOTES_URL = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/ReleaseNotes.txt"
 
 EXE_NAME_WIN   = "Build/The Shooter.exe"
 EXE_NAME_LINUX = "The Shooter Linux.x86_64"
@@ -89,6 +90,7 @@ class LauncherWindow(QtWidgets.QWidget):
 
         self.setup_ui()
         self.refresh_version_display()
+        self.load_release_notes()
 
         self.on_check()
 
@@ -135,6 +137,17 @@ class LauncherWindow(QtWidgets.QWidget):
         layout.addWidget(self.progress)
 
         layout.addStretch()
+        
+        
+        # ----- Release notes -----
+        self.release_notes_box = QtWidgets.QTextEdit()
+        self.release_notes_box.setReadOnly(True)
+        self.release_notes_box.setMinimumHeight(100)
+        self.release_notes_box.setStyleSheet(
+            "background-color:#222; color:white; padding:6px; font-size:13px;"
+        )
+        layout.addWidget(self.release_notes_box)
+
 
         # versión al fondo
         self.version_display = QtWidgets.QLabel("", alignment=QtCore.Qt.AlignCenter)
@@ -317,6 +330,8 @@ class LauncherWindow(QtWidgets.QWidget):
         self.btn_update.setEnabled(False)
         
         self.refresh_version_display()
+        
+        self.load_release_notes()
 
     @QtCore.Slot(str)
     def on_update_error(self, err):
@@ -337,6 +352,19 @@ class LauncherWindow(QtWidgets.QWidget):
     
     def game_installed(self):
         return VERSION_FILE.exists() and BUILD_DIR.exists()
+    
+    # ------------ LOAD RELEASE NOTES ------------
+    
+    def load_release_notes(self):
+        try:
+            resp = requests.get(RELEASE_NOTES_URL, timeout=20)
+            resp.raise_for_status()
+            notes = resp.text.strip()
+        except:
+            notes = "No hay notas de la versión disponibles."
+
+        self.release_notes_box.setText(notes)
+
 
 
 # --------------- MAIN ---------------------

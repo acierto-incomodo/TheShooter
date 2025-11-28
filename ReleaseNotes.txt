@@ -1,0 +1,8 @@
+Cambios
+
+Launcher:
+- Actualización del launcher: v1.0.4
+- Mejora de rendimiento del launcher
+
+Juego:
+- Ninguno

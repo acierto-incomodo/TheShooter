@@ -12,7 +12,7 @@ from PySide6 import QtCore, QtWidgets, QtGui
 
 # ---------------- CONFIG ------------------
 
-LAUNCHER_VERSION = "1.0.3"
+LAUNCHER_VERSION = "1.0.4"
 
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"

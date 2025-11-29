@@ -12,7 +12,7 @@ from PySide6 import QtCore, QtWidgets, QtGui
 
 # ---------------- CONFIG ------------------
 
-LAUNCHER_VERSION = "1.0.4"
+LAUNCHER_VERSION = "1.0.5"
 
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"
@@ -248,23 +248,14 @@ class LauncherWindow(QtWidgets.QWidget):
 
     @QtCore.Slot(bool, str)
     def on_check_done(self, update_available, latest):
-        self.btn_check.setEnabled(True)
+        self.btn_check.setEnabled(True)  # opcional: ocultar botones
+        self.btn_update.setEnabled(True)
         
-        installed = self.game_installed()
-        
-        if installed:
-            if update_available:
-                self.set_status(f"Nueva versión disponible: {latest}")
-                self.btn_update.setEnabled(True)
-            else:
-                self.set_status("Tu juego está actualizado.")
-                self.btn_update.setEnabled(False)
-                
+        if update_available or not self.game_installed():
+            self.set_status(f"Nueva versión disponible: {latest}. Actualizando automáticamente...")
+            self.on_update()  # llama directamente al update
         else:
-            # si NO está instalado → mostrar "Instalar"
-            self.set_status(f"El juego no esta instalado. Versión disponible: {latest}")
-            self.btn_update.setText("Instalar")
-            self.btn_update.setEnabled(True)
+            self.set_status("Tu juego está actualizado.")
 
     @QtCore.Slot(str)
     def on_check_failed(self, err):
@@ -274,7 +265,12 @@ class LauncherWindow(QtWidgets.QWidget):
     # ------------ UPDATE ----------
 
     def on_update(self):
+        # Deshabilitar botones mientras se actualiza
+        self.btn_check.setEnabled(False)
         self.btn_update.setEnabled(False)
+        self.btn_start.setEnabled(False)
+        self.btn_delete_data.setEnabled(False)
+        
         self.progress.setVisible(True)
         self.progress.setValue(0)
         self.set_status("Descargando versión...")
@@ -326,18 +322,26 @@ class LauncherWindow(QtWidgets.QWidget):
         self.progress.setVisible(False)
         self.set_status("Instalación completada." if not self.game_installed() else "Actualización completada.")
         
-        self.btn_update.setText("Actualizar")
-        self.btn_update.setEnabled(False)
+        # Habilitar botones nuevamente
+        self.btn_check.setEnabled(True)
+        self.btn_update.setEnabled(True)
+        self.btn_start.setEnabled(True)
+        self.btn_delete_data.setEnabled(True)
         
         self.refresh_version_display()
-        
         self.load_release_notes()
+
 
     @QtCore.Slot(str)
     def on_update_error(self, err):
         self.progress.setVisible(False)
         self.set_status(f"Error: {err}")
+        
+        # Habilitar botones nuevamente
+        self.btn_check.setEnabled(True)
         self.btn_update.setEnabled(True)
+        self.btn_start.setEnabled(True)
+        self.btn_delete_data.setEnabled(True)
 
     # ------------ START ----------
 

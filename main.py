@@ -12,7 +12,7 @@ from PySide6 import QtCore, QtWidgets, QtGui
 
 # ---------------- CONFIG ------------------
 
-LAUNCHER_VERSION = "1.0.5"
+LAUNCHER_VERSION = "1.0.6"
 
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"
@@ -348,7 +348,8 @@ class LauncherWindow(QtWidgets.QWidget):
     def on_start(self):
         try:
             start_game_process()
-            self.set_status("Juego iniciado.")
+            # Cerrar el launcher
+            QtWidgets.QApplication.quit()
         except Exception as e:
             self.set_status(f"Error al iniciar: {e}")
             

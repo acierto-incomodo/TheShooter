@@ -1,8 +1,7 @@
 Cambios
 
-Launcher (v1.0.5):
-- Actualización automatica
-- Arreglos en colores
+Launcher (v1.0.6):
+- Cerrar automaticamente al iniciar
 
 Juego (v1.1.0):
 - Mejoras de rendimiento

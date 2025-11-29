@@ -3,7 +3,9 @@ Cambios
 Launcher (v1.0.6):
 - Cerrar automaticamente al iniciar
 
-Juego (v1.1.0):
+Juego (v1.1.1):
 - Mejoras de rendimiento
 - Rediseño de interfaz
 - Graffitis
+- Mapa de 10 minutos
+- Mapa de 15 minutos

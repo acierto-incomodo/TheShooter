@@ -144,7 +144,7 @@ class LauncherWindow(QtWidgets.QWidget):
         self.release_notes_box.setReadOnly(True)
         self.release_notes_box.setMinimumHeight(100)
         self.release_notes_box.setStyleSheet(
-            "background-color:#222; color:white; padding:6px; font-size:13px;"
+            "padding:6px; font-size:13px;"
         )
         layout.addWidget(self.release_notes_box)
 

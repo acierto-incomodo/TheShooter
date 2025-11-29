@@ -2,6 +2,7 @@ Cambios
 
 Launcher (v1.0.5):
 - Actualización automatica
+- Arreglos en colores
 
 Juego (v1.1.0):
 - Mejoras de rendimiento

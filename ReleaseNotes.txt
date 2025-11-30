@@ -3,6 +3,6 @@ Cambios
 Launcher (v1.0.6):
 - Cerrar automaticamente al iniciar
 
-Juego (v1.1.2):
+Juego (v1.1.3):
 - Graffitis
-- Discord Rich Presence
+- Discord Rich Presence eliminado por errores

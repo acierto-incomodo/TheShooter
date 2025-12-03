@@ -16,12 +16,17 @@ else
     echo "BuildLinux.sh no encontrado."
 fi
 
-# Ejecutar BuildSnap.sh
-if [ -f "./BuildSnap.sh" ]; then
-    bash ./BuildSnap.sh
-    echo "BuildSnap.sh ejecutado correctamente."
+# Copiar y dar permisos al ejecutable
+if [ -f "dist/main" ]; then
+    cp dist/main ./main
+    chmod +x main
+    echo "Ejecutable copiado y permisos aplicados."
 else
-    echo "BuildSnap.sh no encontrado."
+    echo "dist/main no encontrado."
 fi
+
+# Ejecutar snapcraft
+snapcraft
+echo "Snapcraft ejecutado correctamente."
 
 echo "Todos los scripts se han ejecutado."

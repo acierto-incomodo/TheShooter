@@ -1,7 +1,6 @@
 
 /node_modules
 /build
-/dist
 /theshooterlauncher_deb
 /venv
 *.spec
@@ -14,3 +13,7 @@
 version_win_launcher.txt
 launcher_win.py
 credentials
+main
+dist/main
+/dist
+/dist

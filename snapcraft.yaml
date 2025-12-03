@@ -1,0 +1,21 @@
+name: the-shooter
+title: The Shooter
+base: core22
+version: '1.0.6'
+summary: The Shooter Launcher
+description: >
+  Launcher oficial de The Shooter.
+
+grade: stable
+confinement: strict
+
+apps:
+  the-shooter:
+    command: main
+
+parts:
+  the-shooter:
+    plugin: nil
+    source: .
+    stage:
+      - main

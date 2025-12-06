@@ -10,7 +10,7 @@ SolidCompression=yes
 AppCopyright=Copyright © 2025 StormGamesStudios. All rights reserved.
 VersionInfoCompany=StormGamesStudios
 AppPublisher=StormGamesStudios
-SetupIconFile=logo.ico
+SetupIconFile=logo_new.ico
 VersionInfoVersion=1.0.2.0
 DisableDirPage=yes
 DisableProgramGroupPage=yes
@@ -18,16 +18,16 @@ DisableProgramGroupPage=yes
 [Files]
 ; Archivos del lanzador
 Source: "C:\Users\mapsp\Documents\GitHub\TheShooter\dist\installer_updater.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\mapsp\Documents\GitHub\TheShooter\logo.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\mapsp\Documents\GitHub\TheShooter\logo.png"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\mapsp\Documents\GitHub\TheShooter\logo_new.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\mapsp\Documents\GitHub\TheShooter\logo_new.png"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 ; Acceso directo en el escritorio
-Name: "{userdesktop}\The Shooter Launcher New"; Filename: "{app}\installer_updater.exe"; IconFilename: "{app}\logo.ico"
+Name: "{userdesktop}\The Shooter Launcher New"; Filename: "{app}\installer_updater.exe"; IconFilename: "{app}\logo_new.ico"
 
 ; Acceso directo en el menú de inicio dentro de la carpeta StormLauncher_HMCL-Edition
-Name: "{commonprograms}\StormGamesStudios\The Shooter Launcher New"; Filename: "{app}\installer_updater.exe"; IconFilename: "{app}\logo.ico"
-Name: "{commonprograms}\StormGamesStudios\Desinstalar The Shooter Launcher New"; Filename: "{uninstallexe}"; IconFilename: "{app}\logo.ico"
+Name: "{commonprograms}\StormGamesStudios\The Shooter Launcher New"; Filename: "{app}\installer_updater.exe"; IconFilename: "{app}\logo_new.ico"
+Name: "{commonprograms}\StormGamesStudios\Desinstalar The Shooter Launcher New"; Filename: "{uninstallexe}"; IconFilename: "{app}\logo_new.ico"
 
 [Registry]
 ; Guardar ruta de instalación para poder desinstalar

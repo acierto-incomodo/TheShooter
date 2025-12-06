@@ -1,6 +1,6 @@
 [Setup]
 AppName=The Shooter Launcher by StormGamesStudios
-AppVersion=1.0.2
+AppVersion=1.0.3
 DefaultDirName={userappdata}\StormGamesStudios\NewGameDir\TheShooterLauncher_New
 DefaultGroupName=StormGamesStudios
 OutputDir=C:\Users\mapsp\Documents\GitHub\TheShooter\output

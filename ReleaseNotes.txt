@@ -1,7 +1,7 @@
 Cambios
 
-Launcher (v1.0.6):
-- Cerrar automaticamente al iniciar
+Launcher (v1.0.7):
+- Pequeña actualización de errores
 
 Juego (v1.1.4):
 - Correción de errores

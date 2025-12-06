@@ -1,7 +1,7 @@
 name: the-shooter
 title: The Shooter
 base: core22
-version: '1.0.6'
+version: '1.0.7'
 summary: The Shooter Launcher
 description: >
   Launcher oficial de The Shooter.

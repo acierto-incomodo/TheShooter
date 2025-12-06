@@ -9,7 +9,7 @@ PACKAGE_NAME="theshooterlauncher"
 VERSION="1.0.7"
 ARCH="amd64"
 EXECUTABLE_NAME="main"        # Tu binario generado por PyInstaller
-ICON_NAME="logo.png"           # Icono del launcher
+ICON_NAME="logo_new.png"           # Icono del launcher
 
 # Directorios del paquete
 DEB_DIR="${PACKAGE_NAME}_deb"

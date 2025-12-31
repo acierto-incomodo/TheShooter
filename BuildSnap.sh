@@ -8,7 +8,7 @@ mkdir -p snap/local
 cat << 'EOF' > snap/snapcraft.yaml
 name: theshooterlauncher
 base: core22
-version: '1.0.7'
+version: '1.0.8'
 summary: Launcher oficial del juego The Shooter
 description: >
   Launcher que permite instalar, actualizar e iniciar The Shooter.

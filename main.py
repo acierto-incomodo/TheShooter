@@ -12,7 +12,7 @@ from PySide6 import QtCore, QtWidgets, QtGui
 
 # ---------------- CONFIG ------------------
 
-LAUNCHER_VERSION = "1.0.7"
+LAUNCHER_VERSION = "1.0.8"
 
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"
@@ -321,6 +321,15 @@ class LauncherWindow(QtWidgets.QWidget):
     def on_update_done(self, version):
         self.progress.setVisible(False)
         self.set_status("Instalación completada." if not self.game_installed() else "Actualización completada.")
+        
+        # Limpiar carpeta de descargas tras instalación/actualización exitosa
+        try:
+            if DOWNLOAD_DIR.exists():
+                shutil.rmtree(DOWNLOAD_DIR)
+            DOWNLOAD_DIR.mkdir(exist_ok=True)
+        except Exception as e:
+            # No bloqueamos la UI si falla la limpieza; mostramos advertencia
+            self.set_status(self.status.text() + f" (No se pudo limpiar downloads: {e})")
         
         # Habilitar botones nuevamente
         self.btn_check.setEnabled(True)

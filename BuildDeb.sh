@@ -6,7 +6,7 @@ set -e
 
 # Configuración
 PACKAGE_NAME="theshooterlauncher"
-VERSION="1.0.8"
+VERSION="1.0.9"
 ARCH="amd64"
 EXECUTABLE_NAME="main"        # Tu binario generado por PyInstaller
 ICON_NAME="logo_new.png"           # Icono del launcher

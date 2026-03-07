@@ -1,5 +1,5 @@
 Clear.bat
 cp main.py launcher_win.py
-python -m PyInstaller --onefile --windowed --noconsole --icon=logo_new.ico launcher_win.py
-python -m PyInstaller --onefile --windowed --noconsole --icon=logo_new.ico installer_updater.py
-echo 1.0.9 > version_win_launcher.txt
+python -m PyInstaller --onefile --windowed --noconsole --icon=icono.ico launcher_win.py
+python -m PyInstaller --onefile --windowed --noconsole --icon=icono.ico installer_updater.py
+echo 1.1.0 > version_win_launcher.txt

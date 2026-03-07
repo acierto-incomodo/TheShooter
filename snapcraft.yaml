@@ -1,10 +1,10 @@
 name: the-shooter
-title: The Shooter
+title: Fusion Arena
 base: core22
 version: '1.0.8'
-summary: The Shooter Launcher
+summary: Fusion Arena Launcher
 description: >
-  Launcher oficial de The Shooter.
+  Launcher oficial de Fusion Arena.
 
 grade: stable
 confinement: strict

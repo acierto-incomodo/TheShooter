@@ -1,7 +1,9 @@
 Cambios
 
-Launcher (v1.0.7):
-- Pequeña actualización de errores
-
-Juego (v1.1.4):
+Juego (v1.2.0):
 - Correción de errores
+- Habilidad de correr
+- Compatibilidad agregada para jugar con mando
+
+Launcher (v1.1.0):
+- Pequeña actualización de errores

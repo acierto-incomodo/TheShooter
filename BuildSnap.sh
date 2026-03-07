@@ -8,10 +8,10 @@ mkdir -p snap/local
 cat << 'EOF' > snap/snapcraft.yaml
 name: theshooterlauncher
 base: core22
-version: '1.0.8'
-summary: Launcher oficial del juego The Shooter
+version: '1.1.0'
+summary: Launcher oficial del juego Fusion Arena
 description: >
-  Launcher que permite instalar, actualizar e iniciar The Shooter.
+  Launcher que permite instalar, actualizar e iniciar Fusion Arena.
   Compatible con Windows y Linux desde un único instalador.
 
 grade: stable
@@ -45,7 +45,7 @@ EOF
 # Crear el archivo launcher.desktop
 cat << 'EOF' > snap/gui/theshooterlauncher.desktop
 [Desktop Entry]
-Name=The Shooter Launcher
+Name=Fusion Arena Launcher
 Exec=theshooterlauncher
 Icon=${SNAP}/logo.png
 Type=Application

@@ -1,15 +1,15 @@
 #!/bin/bash
 # build_deb.sh
-# Crea un paquete .deb para The Shooter Launcher desde el ejecutable PyInstaller
+# Crea un paquete .deb para Fusion Arena Launcher desde el ejecutable PyInstaller
 
 set -e
 
 # Configuración
-PACKAGE_NAME="theshooterlauncher"
-VERSION="1.0.9"
+PACKAGE_NAME="fusionarenalauncher"
+VERSION="1.1.0"
 ARCH="amd64"
 EXECUTABLE_NAME="main"        # Tu binario generado por PyInstaller
-ICON_NAME="logo_new.png"           # Icono del launcher
+ICON_NAME="icono.png"           # Icono del launcher
 
 # Directorios del paquete
 DEB_DIR="${PACKAGE_NAME}_deb"
@@ -36,8 +36,8 @@ Priority: optional
 Architecture: $ARCH
 Depends: python3
 Maintainer: StormGamesStudios <meliodas.aitor@gmail.com>
-Description: Launcher de The Shooter
- Un launcher para descargar y actualizar The Shooter automáticamente.
+Description: Launcher de Fusion Arena
+ Un launcher para descargar y actualizar Fusion Arena automáticamente.
 EOL
 
 # Copiar ejecutable y darle permisos
@@ -59,8 +59,8 @@ chmod +x "$BIN_DIR/$PACKAGE_NAME"
 # Crear archivo .desktop para menú
 cat > "$APPLICATIONS_DIR/$PACKAGE_NAME.desktop" <<EOL
 [Desktop Entry]
-Name=The Shooter Launcher
-Comment=Launcher de The Shooter
+Name=Fusion Arena Launcher
+Comment=Launcher de Fusion Arena
 Exec=/usr/local/bin/$PACKAGE_NAME
 Icon=/opt/$PACKAGE_NAME/$ICON_NAME
 Terminal=false

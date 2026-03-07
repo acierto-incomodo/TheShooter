@@ -12,15 +12,15 @@ from PySide6 import QtCore, QtWidgets, QtGui
 
 # ---------------- CONFIG ------------------
 
-LAUNCHER_VERSION = "1.0.9"
+LAUNCHER_VERSION = "1.1.0"
 
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"
 VERSION_URL = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Version.txt"
 RELEASE_NOTES_URL = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/ReleaseNotes.txt"
 
-EXE_NAME_WIN   = "Build/The Shooter.exe"
-EXE_NAME_LINUX = "The Shooter Linux.x86_64"
+EXE_NAME_WIN   = "Build/Fusion Arena.exe"
+EXE_NAME_LINUX = "Fusion Arena Linux.x86_64"
 
 DOWNLOAD_DIR = Path.cwd() / "downloads"
 GAME_DIR     = Path.cwd() / "game"
@@ -83,7 +83,7 @@ class LauncherWindow(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("The Shooter Launcher")
+        self.setWindowTitle("Fusion Arena Launcher")
         self.setMinimumSize(520, 420)
         self.setMaximumSize(520, 420)
         self.setWindowIcon(QtGui.QIcon.fromTheme("applications-games"))
@@ -97,7 +97,7 @@ class LauncherWindow(QtWidgets.QWidget):
     def setup_ui(self):
         layout = QtWidgets.QVBoxLayout(self)
 
-        title = QtWidgets.QLabel("The Shooter")
+        title = QtWidgets.QLabel("Fusion Arena")
         title.setAlignment(QtCore.Qt.AlignCenter)
         title.setStyleSheet("font-size:22px; font-weight:bold;")
         layout.addWidget(title)

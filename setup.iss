@@ -4,7 +4,7 @@ AppVersion=1.0.4
 DefaultDirName={userappdata}\StormGamesStudios\NewGameDir\TheShooterLauncher_New
 DefaultGroupName=StormGamesStudios
 OutputDir=C:\Users\melio\Documents\GitHub\TheShooter\output
-OutputBaseFilename=Fusion_Arena_Launcher_Installer_New
+OutputBaseFilename=Fusion_Arena_Launcher_Installer
 Compression=lzma
 SolidCompression=yes
 AppCopyright=Copyright © 2025 StormGamesStudios. All rights reserved.
@@ -27,7 +27,7 @@ Name: "{userdesktop}\Fusion Arena Launcher"; Filename: "{app}\installer_updater.
 
 ; Acceso directo en el menú de inicio dentro de la carpeta StormLauncher_HMCL-Edition
 Name: "{commonprograms}\StormGamesStudios\Fusion Arena Launcher"; Filename: "{app}\installer_updater.exe"; IconFilename: "{app}\icono.ico"
-Name: "{commonprograms}\StormGamesStudios\Desinstalar Fusion Arena Launcher New"; Filename: "{uninstallexe}"; IconFilename: "{app}\icono.ico"
+Name: "{commonprograms}\StormGamesStudios\Desinstalar Fusion Arena Launcher"; Filename: "{uninstallexe}"; IconFilename: "{app}\icono.ico"
 
 [Registry]
 ; Guardar ruta de instalación para poder desinstalar

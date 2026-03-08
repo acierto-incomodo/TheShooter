@@ -1,6 +1,6 @@
 Cambios
 
-Juego (v1.2.0):
+Juego (v1.2.2):
 - Correción de errores
 - Habilidad de correr
 - Compatibilidad agregada para jugar con mando

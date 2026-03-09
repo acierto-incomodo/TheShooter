@@ -1,1 +1,1 @@
-dpkg-deb --build theshooterlauncher_deb
+dpkg-deb --build fusionarenalauncher_deb

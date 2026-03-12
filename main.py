@@ -12,7 +12,7 @@ from PySide6 import QtCore, QtWidgets, QtGui
 
 # ---------------- CONFIG ------------------
 
-LAUNCHER_VERSION = "1.1.0"
+LAUNCHER_VERSION = "1.1.1"
 
 BUILD_URL_WIN = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Build.zip"
 BUILD_URL_LINUX = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/BuildLinux.zip"
@@ -94,6 +94,12 @@ class LauncherWindow(QtWidgets.QWidget):
 
         self.on_check()
 
+        # Temporizador para actualizar el estado de MS Store automáticamente
+        if sys.platform.startswith("win"):
+            self.store_refresh_timer = QtCore.QTimer(self)
+            self.store_refresh_timer.timeout.connect(self.update_ms_store_button)
+            self.store_refresh_timer.start(3000)  # Comprueba cada 3 segundos
+
     def setup_ui(self):
         layout = QtWidgets.QVBoxLayout(self)
 
@@ -123,9 +129,11 @@ class LauncherWindow(QtWidgets.QWidget):
 
         self.btn_open_folder = QtWidgets.QPushButton("Abrir ubicación")
         self.btn_delete_data = QtWidgets.QPushButton("Eliminar datos")
+        self.btn_ms_store = QtWidgets.QPushButton()
 
         tools_layout.addWidget(self.btn_open_folder)
         tools_layout.addWidget(self.btn_delete_data)
+        tools_layout.addWidget(self.btn_ms_store)
 
         layout.addLayout(tools_layout)
         # ------------------------------------------
@@ -176,6 +184,12 @@ class LauncherWindow(QtWidgets.QWidget):
         # nuevas señales
         self.btn_open_folder.clicked.connect(self.open_location)
         self.btn_delete_data.clicked.connect(self.delete_data)
+        self.btn_ms_store.clicked.connect(self.on_ms_store_clicked)
+
+        if sys.platform.startswith("win"):
+            self.update_ms_store_button()
+        else:
+            self.btn_ms_store.setVisible(False)
 
         self.btn_update.setEnabled(False)
 
@@ -219,6 +233,36 @@ class LauncherWindow(QtWidgets.QWidget):
         except Exception as e:
             self.set_status(f"Error: {e}")
 
+    # ------------ NUEVAS FUNCIONES: MICROSOFT STORE ------------
+
+    def is_ms_store_installed(self):
+        if not sys.platform.startswith("win"):
+            return False
+        try:
+            # Comprobamos si el paquete está instalado usando PowerShell
+            # Usamos el nombre del paquete (StormGamesStudios.FusionArena) en lugar del PFN
+            process = subprocess.run(
+                ["powershell", "-Command", "Get-AppxPackage StormGamesStudios.FusionArena"],
+                capture_output=True,
+                text=True,
+                creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+            )
+            return bool(process.stdout.strip())
+        except:
+            return False
+
+    def update_ms_store_button(self):
+        if self.is_ms_store_installed():
+            self.btn_ms_store.setText("Abrir con Microsoft Store")
+        else:
+            self.btn_ms_store.setText("Instalar de Microsoft Store")
+
+    def on_ms_store_clicked(self):
+        if self.is_ms_store_installed():
+            subprocess.Popen(["explorer.exe", "shell:AppsFolder\\StormGamesStudios.FusionArena_8m3s815sae1r4!App"])
+        else:
+            QtGui.QDesktopServices.openUrl(QtCore.QUrl("ms-windows-store://pdp/?productid=9PG96R122SPV"))
+
     # ------------ CHECK ----------
 
     def on_check(self):
@@ -250,6 +294,9 @@ class LauncherWindow(QtWidgets.QWidget):
     def on_check_done(self, update_available, latest):
         self.btn_check.setEnabled(True)  # opcional: ocultar botones
         self.btn_update.setEnabled(True)
+        
+        if sys.platform.startswith("win"):
+            self.update_ms_store_button()
         
         if update_available or not self.game_installed():
             self.set_status(f"Nueva versión disponible: {latest}. Actualizando automáticamente...")

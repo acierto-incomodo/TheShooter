@@ -11,10 +11,10 @@ from PySide6 import QtCore, QtWidgets, QtGui
 DOWNLOAD_DIR = Path.cwd() / "WinDownloads"
 DOWNLOAD_DIR.mkdir(exist_ok=True)
 
-LAUNCHER_EXE = DOWNLOAD_DIR / "win_launcher.exe"
+LAUNCHER_EXE = DOWNLOAD_DIR / "Fusion_Arena_Launcher_Portable.exe"
 VERSION_FILE = DOWNLOAD_DIR / "version_win_launcher.txt"
 
-URL_LAUNCHER = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/launcher_win.exe"
+URL_LAUNCHER = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/Fusion_Arena_Launcher_Portable.exe"
 URL_VERSION  = "https://github.com/acierto-incomodo/The-Shooter-Launcher/releases/latest/download/version_win_launcher.txt"
 
 # ---------------- Utils -------------------

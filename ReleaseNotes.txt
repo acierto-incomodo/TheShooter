@@ -1,9 +1,7 @@
 Cambios
 
-Juego (v1.2.2):
-- Correción de errores
-- Habilidad de correr
-- Compatibilidad agregada para jugar con mando
+Juego (v1.3.0):
+- Nuevo mapa
 
-Launcher (v1.1.0):
+Launcher (v1.1.2):
 - Pequeña actualización de errores

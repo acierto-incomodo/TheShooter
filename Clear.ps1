@@ -12,7 +12,6 @@ $folders = @(
 $files = @(
   "main.spec",
   "theshooterlauncher_deb.deb",
-  "launcher_win.py",
   "launcher_win.spec",
   "installer_updater.spec",
   "version_win_launcher.txt"

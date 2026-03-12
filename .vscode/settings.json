@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^powershell -Command \"Get-AppxPackage StormGamesStudios\\.FusionArena_8m3s815sae1r4\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

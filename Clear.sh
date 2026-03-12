@@ -4,7 +4,7 @@
 folders=("build" "dist" "downloads" "game" "theshooterlauncher_deb" "snap" "WinDownloads")
 
 # Array de archivos a eliminar
-files=("main.spec" "theshooterlauncher_deb.deb" "launcher_win.py" "launcher_win.spec" "installer_updater.spec" "version_win_launcher.txt")
+files=("main.spec" "theshooterlauncher_deb.deb" "launcher_win.spec" "installer_updater.spec" "version_win_launcher.txt")
 
 # Eliminar carpetas si existen
 for folder in "${folders[@]}"; do

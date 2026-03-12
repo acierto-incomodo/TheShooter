@@ -3,5 +3,5 @@ Cambios
 Juego (v1.3.0):
 - Nuevo mapa
 
-Launcher (v1.1.2):
+Launcher (v1.1.3):
 - Pequeña actualización de errores

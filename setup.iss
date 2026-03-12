@@ -1,7 +1,7 @@
 [Setup]
 AppName=Fusion Arena Launcher by StormGamesStudios
-AppVersion=1.0.4
-DefaultDirName={userappdata}\StormGamesStudios\Programs\TheShooterLauncher_New
+AppVersion=1.0.5
+DefaultDirName={userappdata}\StormGamesStudios\NewGameDir\TheShooterLauncher_New
 DefaultGroupName=StormGamesStudios
 OutputDir=C:\Users\melio\Documents\GitHub\TheShooter\output
 OutputBaseFilename=Fusion_Arena_Launcher_Installer
@@ -11,7 +11,7 @@ AppCopyright=Copyright © 2025 StormGamesStudios. All rights reserved.
 VersionInfoCompany=StormGamesStudios
 AppPublisher=StormGamesStudios
 SetupIconFile=icono.ico
-VersionInfoVersion=1.0.4.0
+VersionInfoVersion=1.0.5.0
 DisableProgramGroupPage=yes
 ; Habilitar selección de carpeta
 DisableDirPage=yes

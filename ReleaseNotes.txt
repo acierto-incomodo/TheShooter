@@ -1,7 +1,9 @@
 Cambios
 
-Juego (v1.3.0):
+Juego (v1.3.1):
 - Nuevo mapa
+- Aumento de velocidad
+- Mejoras graficas
 
 Launcher (v1.1.3):
 - Pequeña actualización de errores

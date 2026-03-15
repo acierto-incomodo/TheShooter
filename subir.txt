@@ -1,0 +1,2 @@
+- Fusion_Arena_Launcher_Portable.exe
+- launcher_win.exe
